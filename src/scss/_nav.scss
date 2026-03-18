@@ -1,0 +1,131 @@
+// ─────────────────────────────────────────────
+// _nav.scss
+// ─────────────────────────────────────────────
+@use 'variables' as *;
+.nav-drawer {
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    bottom: 0;
+    width: $nav-width;
+    background: $aws-navy;
+    border-right: 1px solid $border;
+    z-index: 160;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    &.open {
+        transform: translateX(0);
+    }
+    // On larger screens, nav can be persistent
+    @media (min-width: 1080px) {
+        position: sticky;
+        transform: translateX(-100%);
+        flex-shrink: 0;
+        height: calc(100vh - #{$header-height});
+        top: $header-height;
+        &.closed {
+            transform: translateX(-100%);
+            width: 0;
+            border: none;
+        }
+    }
+    &__header {
+        padding: 1.25rem 1.25rem 0.75rem;
+        border-bottom: 1px solid $border;
+        flex-shrink: 0;
+    }
+    &__heading {
+        font-family: $font-mono;
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $text-secondary;
+        margin-bottom: 0.5rem;
+    }
+    &__home-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border-radius: $radius-md;
+        background: rgba($aws-orange, 0.1);
+        border: 1px solid rgba($aws-orange, 0.25);
+        color: $aws-orange;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: $transition-fast;
+        &:hover {
+            background: rgba($aws-orange, 0.18);
+        }
+    }
+    &__scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.75rem 0.625rem;
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $border;
+            border-radius: 2px;
+        }
+    }
+    &__section-label {
+        font-family: $font-mono;
+        font-size: 0.625rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $text-secondary;
+        padding: 0.5rem 0.625rem 0.25rem;
+    }
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        width: 100%;
+        padding: 0.5625rem 0.75rem;
+        border-radius: $radius-md;
+        color: $text-secondary;
+        font-size: 0.875rem;
+        transition: $transition-fast;
+        text-align: left;
+        border: 1px solid transparent;
+        &:hover {
+            background: $hover-bg;
+            color: $text-primary;
+        }
+        &.active {
+            background: rgba($aws-orange, 0.1);
+            border-color: rgba($aws-orange, 0.25);
+            color: $aws-orange;
+            .nav-drawer__item-number {
+                color: $aws-orange;
+            }
+        }
+    }
+    &__item-number {
+        font-family: $font-mono;
+        font-size: 0.6875rem;
+        color: $text-secondary;
+        min-width: 24px;
+    }
+    &__item-label {
+        flex: 1;
+        font-weight: 500;
+    }
+    &__item-diff {
+        font-family: $font-mono;
+        font-size: 0.5625rem;
+        padding: 1px 5px;
+        border-radius: 3px;
+        background: rgba($text-secondary, 0.1);
+        color: $text-secondary;
+    }
+}

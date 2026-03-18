@@ -1,0 +1,43 @@
+// ─────────────────────────────────────────────
+// _variables.scss
+// ─────────────────────────────────────────────
+
+// Colors
+$aws-orange:     #FF9900;
+$aws-dark:       #0D1117;
+$aws-navy:       #131F2E;
+$aws-navy-deep:  #0A1628;
+$text-primary:   #E6EDF3;
+$text-secondary: #8B949E;
+$border:         #30363D;
+$correct:        #3FB950;
+$incorrect:      #F85149;
+$card-bg:        #161B22;
+$hover-bg:       #1C2128;
+
+// Domain colors
+$domain-1: #4F8CFF;
+$domain-2: #A371F7;
+$domain-3: #FF9900;
+$domain-4: #3FB950;
+$domain-5: #F85149;
+
+// Typography
+$font-sans: 'IBM Plex Sans', sans-serif;
+$font-mono: 'IBM Plex Mono', monospace;
+$font-base: 1.125rem;
+
+// Spacing
+$radius-sm:  4px;
+$radius-md:  8px;
+$radius-lg:  12px;
+$radius-xl:  16px;
+
+// Layout
+$nav-width:       280px;
+$header-height:   64px;
+$content-max:     900px;
+
+// Transitions
+$transition-fast: all 0.15s ease;
+$transition-med:  all 0.25s ease;

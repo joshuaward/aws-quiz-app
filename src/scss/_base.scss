@@ -1,0 +1,57 @@
+// ─────────────────────────────────────────────
+// _base.scss
+// ─────────────────────────────────────────────
+@use 'variables' as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: $font-base;
+}
+
+body {
+  font-family: $font-sans;
+  background: $aws-dark;
+  color: $text-primary;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: $font-sans;
+  cursor: pointer;
+  border: none;
+  background: none;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+select {
+  font-family: $font-sans;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  color: $aws-orange;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Mono utility
+.mono {
+  font-family: $font-mono;
+}
