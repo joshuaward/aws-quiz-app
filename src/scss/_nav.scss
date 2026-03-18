@@ -21,7 +21,7 @@
     }
     // On larger screens, nav can be persistent
     @media (min-width: 1080px) {
-        position: sticky;
+        // position: sticky;
         transform: translateX(-100%);
         flex-shrink: 0;
         height: calc(100vh - #{$header-height});
