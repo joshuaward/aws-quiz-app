@@ -1,0 +1,579 @@
+// ─────────────────────────────────────────────
+// _history.scss
+// ─────────────────────────────────────────────
+@use 'variables' as *;
+
+// ── Panel shell ───────────────────────────────────────────────
+.history-panel {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+// ── Header ────────────────────────────────────────────────────
+.history-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.history-panel__title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.history-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+%action-btn {
+  padding: 0.4375rem 0.875rem;
+  border-radius: $radius-sm;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid $border;
+  transition: $transition-fast;
+  cursor: pointer;
+}
+
+.history-panel__export-btn {
+  @extend %action-btn;
+  background: $card-bg;
+  color: $text-secondary;
+  &:hover { color: $text-primary; background: $hover-bg; }
+}
+
+.history-panel__import-btn {
+  @extend %action-btn;
+  background: $card-bg;
+  color: $text-secondary;
+  &:hover { color: $text-primary; background: $hover-bg; }
+}
+
+.history-panel__clear-btn {
+  @extend %action-btn;
+  background: $card-bg;
+  color: $text-secondary;
+  &:hover { color: $incorrect; border-color: $incorrect; }
+  &.confirm { background: rgba($incorrect, 0.15); color: $incorrect; border-color: $incorrect; }
+}
+
+.history-panel__home {
+  @extend %action-btn;
+  background: rgba($aws-orange, 0.1);
+  color: $aws-orange;
+  border-color: rgba($aws-orange, 0.3);
+  &:hover { background: rgba($aws-orange, 0.2); }
+}
+
+// ── Summary stats ─────────────────────────────────────────────
+.history-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 600px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.history-stat {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: 1rem;
+  text-align: center;
+}
+
+.history-stat__val {
+  display: block;
+  font-family: $font-mono;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: $aws-orange;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.history-stat__lbl {
+  font-size: 0.75rem;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: $font-mono;
+}
+
+// ── Overall domain health ──────────────────────────────────────
+.history-domain-health {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 1.125rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.history-domain-health__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-family: $font-mono;
+  margin-bottom: 0.875rem;
+}
+
+.history-domain-health__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.history-domain-bar {
+  display: grid;
+  grid-template-columns: 160px 1fr 44px;
+  align-items: center;
+  gap: 0.75rem;
+
+  @media (max-width: 520px) { grid-template-columns: 100px 1fr 36px; }
+}
+
+.history-domain-bar__name {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.focus-flag {
+  color: #FFA040;
+  font-size: 0.75rem;
+}
+
+.history-domain-bar__track {
+  height: 8px;
+  background: $border;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.history-domain-bar__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: $correct;
+  transition: width 0.5s ease;
+
+  &[style*="width: 0"] { background: $border; }
+
+  @for $i from 0 through 10 {
+    $pct: $i * 10;
+    &[data-pct="#{$pct}"] { width: #{$pct}%; }
+  }
+
+  // Dynamic via inline style, color based on modifier
+  &--warn { background: #FFA040; }
+}
+
+// Apply color based on fill percentage via JavaScript inline style
+// We handle this with a CSS variable trick if needed, but for simplicity
+// the fill color is determined in JSX via the --warn modifier
+
+.history-domain-bar__fill:not(.history-domain-bar__fill--warn) {
+  // Correct-zone green
+  background: $correct;
+}
+
+.history-domain-bar__pct {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $text-secondary;
+  text-align: right;
+}
+
+// ── Filter bar ─────────────────────────────────────────────────
+.history-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  label {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    white-space: nowrap;
+  }
+
+  select {
+    background: $card-bg;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+    padding: 0.375rem 2rem 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    color: $text-primary;
+    font-family: $font-sans;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B949E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+
+    &:focus { outline: none; border-color: $aws-orange; }
+  }
+}
+
+.history-filter__count {
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  font-family: $font-mono;
+  margin-left: auto;
+}
+
+// ── Table ─────────────────────────────────────────────────────
+.history-table-wrap {
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $border;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead {
+    background: $aws-navy;
+    border-bottom: 1px solid $border;
+
+    th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-family: $font-mono;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: $text-secondary;
+      white-space: nowrap;
+      user-select: none;
+
+      &.sortable {
+        cursor: pointer;
+        &:hover { color: $text-primary; }
+      }
+    }
+  }
+
+  tbody {
+    tr:last-child td { border-bottom: none; }
+  }
+}
+
+.sort-icon {
+  margin-left: 4px;
+  opacity: 0.4;
+  font-size: 0.75rem;
+
+  &--active { opacity: 1; color: $aws-orange; }
+}
+
+// ── Body rows ─────────────────────────────────────────────────
+.history-table__row {
+  cursor: pointer;
+  transition: background 0.12s;
+  border-bottom: 1px solid $border;
+
+  td { padding: 0.8125rem 1rem; vertical-align: middle; }
+
+  &:hover { background: $hover-bg; }
+
+  &--expanded {
+    background: rgba($aws-orange, 0.04);
+    border-bottom: none;
+
+    td { border-bottom: 1px solid rgba($aws-orange, 0.2); }
+  }
+
+  &:nth-child(even):not(.history-table__row--expanded) {
+    background: rgba($text-secondary, 0.03);
+    &:hover { background: $hover-bg; }
+  }
+}
+
+.history-table__chevron {
+  display: inline-block;
+  width: 16px;
+  color: $text-secondary;
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.history-table__date {
+  white-space: nowrap;
+  color: $text-secondary;
+  font-size: 0.8125rem;
+}
+
+.history-table__test {
+  min-width: 160px;
+}
+
+.history-table__test-label {
+  display: block;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.history-table__test-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: $text-secondary;
+}
+
+.history-table__score {
+  white-space: nowrap;
+}
+
+.history-table__fraction {
+  display: block;
+  font-family: $font-mono;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.history-table__pct {
+  font-size: 0.75rem;
+  color: $text-secondary;
+  font-family: $font-mono;
+}
+
+.history-table__scaled {
+  white-space: nowrap;
+}
+
+.scaled-chip {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: $radius-sm;
+
+  &--pass { color: $correct; background: rgba($correct, 0.12); }
+  &--fail { color: $incorrect; background: rgba($incorrect, 0.12); }
+}
+
+.history-table__grade {
+  display: block;
+  font-size: 0.6875rem;
+  color: $text-secondary;
+  font-family: $font-mono;
+  margin-top: 2px;
+}
+
+// ── Verdict badge ──────────────────────────────────────────────
+.verdict-badge {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: $radius-sm;
+  letter-spacing: 0.5px;
+
+  &--pass {
+    background: rgba($correct, 0.15);
+    color: $correct;
+    border: 1px solid rgba($correct, 0.3);
+  }
+
+  &--fail {
+    background: rgba($incorrect, 0.15);
+    color: $incorrect;
+    border: 1px solid rgba($incorrect, 0.3);
+  }
+}
+
+// ── Focus tags ─────────────────────────────────────────────────
+.history-table__focus { min-width: 100px; }
+
+.focus-none { color: $text-secondary; opacity: 0.4; }
+
+.focus-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.focus-tag {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(#FFA040, 0.15);
+  color: #FFA040;
+  border: 1px solid rgba(#FFA040, 0.35);
+}
+
+// ── Expanded row detail ────────────────────────────────────────
+.history-table__expanded {
+  td { padding: 0; background: rgba($aws-orange, 0.03); border-bottom: 1px solid $border; }
+}
+
+.history-expand {
+  padding: 1.25rem 1.25rem 1.25rem 2rem;
+}
+
+.history-expand__domains {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+}
+
+.history-domain-card {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: 0.75rem;
+
+  &--focus {
+    border-color: rgba(#FFA040, 0.5);
+    background: rgba(#FFA040, 0.05);
+  }
+}
+
+.history-domain-card__name {
+  font-size: 0.6875rem;
+  color: $text-secondary;
+  margin-bottom: 0.25rem;
+  font-family: $font-mono;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.history-domain-card__score {
+  font-family: $font-mono;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.history-domain-card__bar {
+  margin-top: 0.375rem;
+  height: 4px;
+  background: $border;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.history-domain-card__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: $correct;
+  transition: width 0.4s ease;
+
+  &[data-pct] {
+    @for $i from 0 through 100 {
+      &[data-pct="#{$i}"] { width: #{$i * 1%}; }
+    }
+  }
+}
+
+.history-domain-card--focus .history-domain-card__fill {
+  background: #FFA040;
+}
+
+.history-domain-card__flag {
+  font-size: 0.6875rem;
+  color: #FFA040;
+  margin-top: 0.375rem;
+  font-weight: 600;
+}
+
+.history-expand__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.history-expand__btn {
+  padding: 0.4375rem 1rem;
+  border-radius: $radius-sm;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid $border;
+  transition: $transition-fast;
+
+  &--review {
+    background: rgba($aws-orange, 0.1);
+    color: $aws-orange;
+    border-color: rgba($aws-orange, 0.3);
+    &:hover { background: rgba($aws-orange, 0.2); }
+  }
+
+  &--delete {
+    background: $card-bg;
+    color: $text-secondary;
+    &:hover { color: $incorrect; border-color: $incorrect; background: rgba($incorrect, 0.08); }
+  }
+}
+
+// ── Empty state ────────────────────────────────────────────────
+.history-empty {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-xl;
+}
+
+.history-empty__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.history-empty p {
+  color: $text-secondary;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.history-empty__actions {
+  margin: 1.25rem 0;
+}
+
+.history-empty__cta {
+  margin-top: 1.25rem;
+  padding: 0.75rem 2rem;
+  background: $aws-orange;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border-radius: $radius-md;
+  border: none;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover { opacity: 0.85; }
+}
+
+// ── Domain pill (in table cells) ───────────────────────────────
+.domain-pill {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin: 1px;
+
+  &--excellent { background: rgba($correct, 0.15);   color: $correct;   }
+  &--good      { background: rgba($correct, 0.08);   color: $correct;   }
+  &--warn      { background: rgba(#FFA040, 0.15); color: #FFA040; }
+  &--poor      { background: rgba($incorrect, 0.15); color: $incorrect; }
+}

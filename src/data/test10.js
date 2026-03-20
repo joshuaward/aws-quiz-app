@@ -146,12 +146,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     caseStudy: null,
     text: "(Continued from Case Study) The company wants to prevent the assistant from responding to questions about competitor products or discussing political topics.\n\nWhich Amazon Bedrock feature will meet this requirement?",
     options: [
-      "Amazon Bedrock Model Evaluation",
-      "Amazon Bedrock Guardrails with denied topics configured",
-      "Amazon SageMaker Clarify",
-      "Increasing the max_tokens parameter"
-    ],
-    correct: [1],
+    "Increasing the max_tokens parameter",
+    "Amazon Bedrock Model Evaluation",
+    "Amazon Bedrock Guardrails with denied topics configured",
+    "Amazon SageMaker Clarify"
+  ],
+    correct: [2],
     explanation: "Amazon Bedrock Guardrails allows teams to define denied topics — categories of content the model must not engage with. When a user query or model response touches a denied topic (competitor products, political topics), Guardrails intercepts and blocks or redirects the interaction. Model Evaluation assesses quality metrics. SageMaker Clarify detects bias. max_tokens controls response length."
   },
 
@@ -176,12 +176,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     caseStudy: null,
     text: "(Continued from Case Study) The company's security team requires that all Amazon Bedrock API calls made by the assistant be logged for auditing purposes, including which foundation model was invoked and the timestamp of each call.\n\nWhich AWS service automatically captures this information?",
     options: [
-      "Amazon CloudWatch Metrics",
-      "AWS CloudTrail",
-      "Amazon Macie",
-      "AWS Config"
-    ],
-    correct: [1],
+    "AWS Config",
+    "Amazon CloudWatch Metrics",
+    "AWS CloudTrail",
+    "Amazon Macie"
+  ],
+    correct: [2],
     explanation: "AWS CloudTrail records all API calls made to AWS services, including Amazon Bedrock InvokeModel calls. CloudTrail logs capture who made the call, which model was invoked, the timestamp, and the source IP address. This provides the immutable API-level audit trail required for compliance review. CloudWatch Metrics captures operational metrics. Macie discovers PII in S3. AWS Config tracks resource configuration changes."
   },
 

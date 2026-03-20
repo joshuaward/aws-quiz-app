@@ -41,12 +41,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     id: 3, domain: 2, type: "single",
     text: "A healthcare company is evaluating foundation model customization approaches. They have 50,000 labeled clinical note examples (input: clinical note, output: ICD-10 code) and want the model to learn this specific code assignment task deeply.\n\nWhich customization approach is MOST appropriate for this labeled, task-specific dataset?",
     options: [
-      "Continued pre-training using the labeled examples as unlabeled text",
-      "Instruction fine-tuning — training the model on the labeled input-output pairs to teach the specific coding task",
-      "Prompt engineering with five-shot examples in the system prompt",
-      "Increasing the Top_P parameter to 0.99"
-    ],
-    correct: [1],
+    "Increasing the Top_P parameter to 0.99",
+    "Continued pre-training using the labeled examples as unlabeled text",
+    "Instruction fine-tuning — training the model on the labeled input-output pairs to teach the specific coding task",
+    "Prompt engineering with five-shot examples in the system prompt"
+  ],
+    correct: [2],
     explanation: "Instruction fine-tuning uses labeled input-output pairs to teach the model a specific task behavior by updating its weights. With 50,000 labeled clinical note → ICD-10 code examples, instruction fine-tuning will deeply adapt the model to this precise coding task, learning the mapping from clinical language to standardized codes. Continued pre-training uses unlabeled text for domain knowledge — not task-specific behavior. Few-shot prompting with five examples won't match the depth of 50,000 training examples. Top_P is an inference parameter."
   },
 
@@ -71,12 +71,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     caseLabel: "CASE STUDY — Questions 5–8",
     text: "For stage 1 — exploring and preparing the raw transaction data with minimal scripting — which SageMaker feature should the team use?",
     options: [
-      "SageMaker Model Monitor",
-      "SageMaker Data Wrangler",
-      "SageMaker Ground Truth",
-      "SageMaker Clarify"
-    ],
-    correct: [1],
+    "SageMaker Clarify",
+    "SageMaker Model Monitor",
+    "SageMaker Data Wrangler",
+    "SageMaker Ground Truth"
+  ],
+    correct: [2],
     explanation: "Amazon SageMaker Data Wrangler provides a visual, low-code interface for data exploration (distributions, quality metrics, correlations) and transformation (300+ built-in transforms, custom code). It allows data scientists to explore and prepare the raw transaction data without writing extensive PySpark or Pandas scripts. The prepared dataset and transformation recipe can be exported directly to SageMaker Pipelines for automation. Model Monitor tracks deployed models. Ground Truth labels data. Clarify detects bias."
   },
 

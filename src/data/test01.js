@@ -214,12 +214,12 @@ const questions = [// ───────────────────�
     type: "single",
     text: "A developer is crafting a prompt for a foundation model. The prompt provides the task description followed by three example input-output pairs before asking the model to complete a new task. Which prompt engineering technique is this?",
     options: [
-      "Zero-shot prompting",
-      "Chain-of-thought prompting",
-      "Few-shot prompting",
-      "Negative prompting"
-    ],
-    correct: [2],
+    "Negative prompting",
+    "Zero-shot prompting",
+    "Chain-of-thought prompting",
+    "Few-shot prompting"
+  ],
+    correct: [3],
     explanation: "Few-shot prompting provides several (typically 2–5) examples of input-output pairs within the prompt to guide the model's behavior on a new task. Zero-shot provides no examples. Chain-of-thought asks the model to reason through steps. Negative prompting specifies what the model should NOT do or include."
   },
   {
@@ -240,12 +240,12 @@ const questions = [// ───────────────────�
     type: "single",
     text: "An AI engineer sets the temperature parameter to 0.0 when invoking a foundation model. What effect does this have on the model's output?",
     options: [
-      "The model will refuse to answer sensitive questions",
-      "The model output becomes more random and creative",
-      "The model output becomes deterministic and focused on the highest-probability token",
-      "The model will generate longer responses"
-    ],
-    correct: [2],
+    "The model will generate longer responses",
+    "The model will refuse to answer sensitive questions",
+    "The model output becomes more random and creative",
+    "The model output becomes deterministic and focused on the highest-probability token"
+  ],
+    correct: [3],
     explanation: "Temperature controls the randomness of LLM outputs. A temperature of 0.0 makes the model deterministic — it always picks the most likely next token — producing consistent, focused responses. Higher temperatures (e.g., 0.9–1.2) increase randomness and creativity. Temperature does not affect response length or content filtering."
   },
   {
@@ -293,12 +293,12 @@ const questions = [// ───────────────────�
     type: "single",
     text: "Which of the following BEST describes the purpose of Reinforcement Learning from Human Feedback (RLHF) in the fine-tuning of foundation models?",
     options: [
-      "To increase the size of the training dataset automatically",
-      "To align model outputs with human preferences by training on human preference rankings",
-      "To reduce the computational cost of running inference on large models",
-      "To generate synthetic labeled data for downstream supervised learning"
-    ],
-    correct: [1],
+    "To generate synthetic labeled data for downstream supervised learning",
+    "To increase the size of the training dataset automatically",
+    "To align model outputs with human preferences by training on human preference rankings",
+    "To reduce the computational cost of running inference on large models"
+  ],
+    correct: [2],
     explanation: "RLHF is a fine-tuning technique that uses human feedback (preference rankings between model outputs) as a reward signal to train a reward model, which then guides further fine-tuning via reinforcement learning. The goal is to align model behavior with human values and preferences. It does not reduce inference cost or automatically expand datasets."
   },
 
@@ -323,12 +323,12 @@ const questions = [// ───────────────────�
     type: "single",
     text: "A company uses a foundation model to generate product descriptions. They want to prevent the model from generating harmful, offensive, or off-brand content. Which Amazon Bedrock feature should they implement?",
     options: [
-      "Amazon Bedrock Knowledge Bases",
-      "Amazon Bedrock Guardrails",
-      "Amazon SageMaker Model Monitor",
-      "Amazon Bedrock Model Evaluation"
-    ],
-    correct: [1],
+    "Amazon Bedrock Model Evaluation",
+    "Amazon Bedrock Knowledge Bases",
+    "Amazon Bedrock Guardrails",
+    "Amazon SageMaker Model Monitor"
+  ],
+    correct: [2],
     explanation: "Amazon Bedrock Guardrails allows teams to configure policies that filter harmful content, block restricted topics, mask PII, and apply grounding checks — helping enforce responsible AI use. Knowledge Bases are for RAG. Model Monitor tracks production model performance. Model Evaluation assesses quality of outputs, not real-time filtering."
   },
   {

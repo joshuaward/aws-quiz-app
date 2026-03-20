@@ -13,7 +13,7 @@ function getTypeBadge(q) {
   return { label: 'Multiple Choice', cls: '' };
 }
 
-function evalAnswer(q, answer) {
+export function evalAnswer(q, answer) {
   if (!answer) return false;
   if (q.type === 'single' || q.type === 'multi') {
     const sel = Array.isArray(answer) ? answer : [];
@@ -38,8 +38,34 @@ function isAnswerReady(q, answer) {
   return false;
 }
 
+export function buildExplanation(q, answer, isCorrect) {
+  let correctLabels = null;
+  let answerList    = null;
+
+  if (q.type === 'single' || q.type === 'multi') {
+    correctLabels = q.correct.map(i => String.fromCharCode(65 + i)).join(', ');
+  }
+  if (q.type === 'match') {
+    answerList = q.items.map(
+      (item, i) => `<em>${item}</em> → <strong>${q.choices[q.correct[i]]}</strong>`
+    );
+    const numCorrect = (answer || []).filter((v, i) => v === q.choices[q.correct[i]]).length;
+    if (!isCorrect) correctLabels = `${numCorrect}/${q.items.length} correct`;
+  }
+  if (q.type === 'order') {
+    const POS = ['1st (FIRST)', '2nd', '3rd', '4th (LAST)', '5th'];
+    answerList = q.correctOrder.map(
+      (pos, i) => `<strong>${POS[pos]}</strong> — ${q.items[i]}`
+    );
+  }
+  return { correctLabels, answerList };
+}
+
+// ─────────────────────────────────────────────────────────────
+// Interactive card (used during the test)
+// ─────────────────────────────────────────────────────────────
 export default function QuestionCard({ question: q, index, total, onSubmit }) {
-  const [answer, setAnswer]       = useState(q.type === 'single' || q.type === 'multi' ? [] : []);
+  const [answer,    setAnswer]    = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
@@ -50,7 +76,8 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
     const ok = evalAnswer(q, answer);
     setIsCorrect(ok);
     setSubmitted(true);
-    onSubmit(q.id, ok);
+    // Pass the user's actual answer up alongside the boolean result
+    onSubmit(q.id, answer, ok);
   }
 
   function toggleOption(idx) {
@@ -64,38 +91,13 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
     }
   }
 
-  // Build explanation data
-  function buildExplanation() {
-    let correctLabels = null;
-    let answerList    = null;
-
-    if (q.type === 'single' || q.type === 'multi') {
-      correctLabels = q.correct.map(i => String.fromCharCode(65 + i)).join(', ');
-    }
-    if (q.type === 'match') {
-      answerList = q.items.map(
-        (item, i) => `<em>${item}</em> → <strong>${q.choices[q.correct[i]]}</strong>`
-      );
-      const numCorrect = (answer || []).filter((v, i) => v === q.choices[q.correct[i]]).length;
-      if (!isCorrect) correctLabels = `${numCorrect}/${q.items.length} correct`;
-    }
-    if (q.type === 'order') {
-      const POS = ['1st (FIRST)', '2nd', '3rd', '4th (LAST)', '5th'];
-      answerList = q.correctOrder.map(
-        (pos, i) => `<strong>${POS[pos]}</strong> — ${q.items[i]}`
-      );
-    }
-    return { correctLabels, answerList };
-  }
-
-  const { correctLabels, answerList } = submitted ? buildExplanation() : {};
+  const { correctLabels, answerList } = submitted ? buildExplanation(q, answer, isCorrect) : {};
 
   let cardClass = 'question-card';
   if (submitted) cardClass += isCorrect ? ' question-card--correct' : ' question-card--incorrect';
 
   return (
     <div className={cardClass} id={`q-${q.id}`}>
-      {/* Meta row */}
       <div className="question-card__meta">
         <span className="question-card__number">Question {index + 1} of {total}</span>
         <span className={`type-badge ${cls}`}>{label}</span>
@@ -103,7 +105,6 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
 
       <DomainTag domain={q.domain} />
 
-      {/* Case study box */}
       {q.caseStudy && (
         <div className="case-box">
           <strong className="case-box__label">{q.caseLabel || 'Case Study'}</strong>
@@ -111,10 +112,8 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
         </div>
       )}
 
-      {/* Question text */}
       <p className="question-card__text">{q.text}</p>
 
-      {/* Body by type */}
       {(q.type === 'single' || q.type === 'multi') && (
         <>
           {q.type === 'multi' && <p className="multi-hint">▸ Select all correct answers</p>}
@@ -128,12 +127,7 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
                 btnClass += ' option-btn--selected';
               }
               return (
-                <button
-                  key={i}
-                  className={btnClass}
-                  onClick={() => toggleOption(i)}
-                  disabled={submitted}
-                >
+                <button key={i} className={btnClass} onClick={() => toggleOption(i)} disabled={submitted}>
                   <span className="option-letter">{String.fromCharCode(65 + i)}</span>
                   <span>{opt}</span>
                 </button>
@@ -144,31 +138,19 @@ export default function QuestionCard({ question: q, index, total, onSubmit }) {
       )}
 
       {q.type === 'match' && (
-        <MatchQuestion
-          question={q}
-          answer={answer}
-          submitted={submitted}
-          onChange={setAnswer}
-        />
+        <MatchQuestion question={q} answer={answer} submitted={submitted} onChange={setAnswer} />
       )}
 
       {q.type === 'order' && (
-        <OrderQuestion
-          question={q}
-          answer={answer}
-          submitted={submitted}
-          onChange={setAnswer}
-        />
+        <OrderQuestion question={q} answer={answer} submitted={submitted} onChange={setAnswer} />
       )}
 
-      {/* Check answer button */}
       {!submitted && (
         <button className="check-btn" onClick={handleSubmit} disabled={!ready}>
           Check Answer
         </button>
       )}
 
-      {/* Explanation */}
       {submitted && (
         <Explanation
           isCorrect={isCorrect}

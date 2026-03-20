@@ -335,9 +335,60 @@
     border: 1px solid rgba($aws-orange, 0.3);
   }
 
+  &--remediation {
+    background: rgba(#FF7070, 0.15);
+    color: #FF7070;
+    border: 1px solid rgba(#FF7070, 0.4);
+  }
+
+  &--difficult {
+    background: rgba(#C084FC, 0.15);
+    color: #C084FC;
+    border: 1px solid rgba(#C084FC, 0.3);
+  }
+
   &--moderate {
     background: rgba($incorrect, 0.15);
     color: lighten($incorrect, 15%);
     border: 1px solid rgba($incorrect, 0.3);
+  }
+}
+
+// ── History button on home screen ─────────────────────────────
+.home__history-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding: 0.5625rem 1.25rem;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  color: $text-secondary;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    border-color: $aws-orange;
+    color: $aws-orange;
+    background: rgba($aws-orange, 0.06);
+  }
+}
+
+// ── Nav drawer divider ─────────────────────────────────────────
+.nav-drawer__divider {
+  height: 1px;
+  background: $border;
+  margin: 0.5rem 0.625rem;
+}
+
+.nav-drawer__item--history {
+  color: $text-secondary;
+  margin-bottom: 0.25rem;
+
+  &.active, &:hover {
+    color: $aws-orange;
   }
 }

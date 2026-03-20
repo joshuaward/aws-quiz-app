@@ -33,8 +33,13 @@ const questions = [{
         domain: 1,
         type: "single",
         text: "Which technique involves training a large teacher model and using its output probabilities (soft labels) to train a smaller, more efficient student model that approximates the teacher's performance?",
-        options: ["Data augmentation", "Knowledge distillation", "Transfer learning", "Ensemble learning"],
-        correct: [1],
+        options: [
+            "Ensemble learning",
+            "Data augmentation",
+            "Knowledge distillation",
+            "Transfer learning"
+        ],
+        correct: [2],
         explanation: "Knowledge distillation trains a compact 'student' model to mimic a larger 'teacher' model by learning from the teacher's soft probability outputs (which contain richer information than hard labels). The student model becomes much smaller and faster while retaining most of the teacher's performance. This is a key technique for model compression and edge deployment. Transfer learning reuses pretrained weights. Ensemble combines multiple models."
     },
     {
@@ -51,8 +56,13 @@ const questions = [{
         domain: 1,
         type: "single",
         text: "<div class='scenario-box'>A team uses Amazon SageMaker to train 200 experiments exploring different neural network architectures, learning rates, and regularization strategies. The best model achieves 94.2% test accuracy with a specific hyperparameter combination. Six months later, they need to reproduce exactly this model.</div>Which SageMaker capability makes this possible?",
-        options: ["SageMaker Model Monitor", "SageMaker Experiments with lineage tracking — recording all hyperparameters, code versions, datasets, and metrics for each run", "Manually remembering the hyperparameter values", "SageMaker Data Wrangler"],
-        correct: [1],
+        options: [
+            "SageMaker Data Wrangler",
+            "SageMaker Model Monitor",
+            "SageMaker Experiments with lineage tracking — recording all hyperparameters, code versions, datasets, and metrics for each run",
+            "Manually remembering the hyperparameter values"
+        ],
+        correct: [2],
         explanation: "Amazon SageMaker Experiments automatically captures all experiment details: hyperparameters, code versions, input datasets (with S3 URIs and versions), metrics, and output artifacts. ML Lineage tracking records the complete provenance chain. This makes any experiment fully reproducible months or years later. Relying on memory is not reliable. Model Monitor tracks production drift. Data Wrangler is for data preparation."
     },
     {
@@ -204,8 +214,13 @@ const questions = [{
         domain: 4,
         type: "single",
         text: "<div class='scenario-box'>A company deploys an AI hiring screening tool. The tool was built by a vendor who claims it is 'unbiased.' An independent audit finds it still rejects candidates with non-traditional career paths at higher rates. The company argues they are not responsible because the AI was built by a third party.</div>Which responsible AI accountability principle applies here?",
-        options: ["The vendor is solely responsible; the deploying company has no obligations", "The deploying company retains accountability for the outcomes of AI systems they deploy — regardless of whether the AI was built internally or by a third party", "Only the candidates affected can be held accountable", "Accountability only applies to government AI systems"],
-        correct: [1],
+        options: [
+            "Accountability only applies to government AI systems",
+            "The vendor is solely responsible; the deploying company has no obligations",
+            "The deploying company retains accountability for the outcomes of AI systems they deploy — regardless of whether the AI was built internally or by a third party",
+            "Only the candidates affected can be held accountable"
+        ],
+        correct: [2],
         explanation: "In responsible AI governance, accountability follows deployment — the organization that deploys and benefits from an AI system is accountable for its outcomes, even if a third party built it. This is a critical principle because otherwise organizations could outsource accountability. Deployers have obligations to audit third-party AI, understand its limitations, and remediate harms. This principle is embedded in emerging AI regulations globally."
     },
     {
@@ -222,8 +237,13 @@ const questions = [{
         domain: 4,
         type: "single",
         text: "What is 'algorithmic fairness' and why is it difficult to achieve in practice?",
-        options: ["Algorithmic fairness means the model runs the same algorithm for all users — it has nothing to do with outcomes", "Algorithmic fairness means ensuring model outcomes are equitable across demographic groups; it is difficult because different mathematical definitions of fairness (e.g., demographic parity, equalized odds) are mathematically incompatible and involve value tradeoffs", "Algorithmic fairness is automatically guaranteed when using foundation models", "Algorithmic fairness only applies to image recognition systems"],
-        correct: [1],
+        options: [
+            "Algorithmic fairness only applies to image recognition systems",
+            "Algorithmic fairness means the model runs the same algorithm for all users — it has nothing to do with outcomes",
+            "Algorithmic fairness means ensuring model outcomes are equitable across demographic groups; it is difficult because different mathematical definitions of fairness (e.g., demographic parity, equalized odds) are mathematically incompatible and involve value tradeoffs",
+            "Algorithmic fairness is automatically guaranteed when using foundation models"
+        ],
+        correct: [2],
         explanation: "Algorithmic fairness aims to ensure AI decisions are equitable across demographic groups. The difficulty: different mathematical fairness definitions (demographic parity, equalized odds, calibration, individual fairness) are provably incompatible — satisfying one may mathematically preclude satisfying another. Additionally, fairness involves value judgments about what 'equal' means in context. Organizations must explicitly choose which fairness criteria to optimize and acknowledge the tradeoffs."
     },
     {

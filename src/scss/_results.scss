@@ -150,3 +150,67 @@
     }
   }
 }
+
+// ── Correct / Incorrect summary row ──────────────────────────
+.results__summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto 1.5rem;
+  background: $aws-dark;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  max-width: 280px;
+}
+
+.results__summary-item {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  text-align: center;
+
+  &--correct { border-right: 1px solid $border; }
+}
+
+.results__summary-num {
+  display: block;
+  font-family: $font-mono;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+
+  .results__summary-item--correct & { color: $correct; }
+  .results__summary-item--wrong   & { color: $incorrect; }
+}
+
+.results__summary-lbl {
+  font-size: 0.75rem;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: $font-mono;
+}
+
+.results__summary-divider {
+  width: 1px;
+  background: $border;
+  align-self: stretch;
+}
+
+// ── Review button ──────────────────────────────────────────
+.results__review-btn {
+  padding: 0.8125rem 2.125rem;
+  background: $aws-dark;
+  color: $text-primary;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border-radius: $radius-md;
+  border: 2px solid $aws-orange;
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba($aws-orange, 0.1);
+  }
+}

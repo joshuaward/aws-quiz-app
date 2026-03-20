@@ -1,0 +1,241 @@
+// ─────────────────────────────────────────────
+// _review.scss
+// ─────────────────────────────────────────────
+@use 'variables' as *;
+
+// ── Sticky review header ──────────────────────────────────────
+.review-header {
+  position: sticky;
+  top: $header-height;
+  z-index: 90;
+  background: $aws-navy;
+  border-bottom: 1px solid $border;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0 -1.5rem 1.5rem;  // bleed to edge of main padding
+
+  @media (max-width: 640px) {
+    margin: 0 -0.875rem 1rem;
+    padding: 0.625rem 0.875rem;
+  }
+}
+
+.review-header__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.review-header__back-btn {
+  font-size: 0.875rem;
+  color: $aws-orange;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: $radius-sm;
+  border: 1px solid rgba($aws-orange, 0.35);
+  background: rgba($aws-orange, 0.07);
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba($aws-orange, 0.15);
+  }
+}
+
+.review-header__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $text-primary;
+
+  @media (max-width: 480px) { display: none; }
+}
+
+.review-header__score {
+  font-family: $font-mono;
+  font-size: 0.8125rem;
+  color: $text-secondary;
+  background: $card-bg;
+  border: 1px solid $border;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.review-header__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.review-header__jump {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: $text-secondary;
+
+  label { white-space: nowrap; }
+
+  input {
+    width: 56px;
+    background: $aws-dark;
+    border: 1px solid $border;
+    border-radius: $radius-sm;
+    padding: 4px 8px;
+    color: $text-primary;
+    font-family: $font-mono;
+    font-size: 0.875rem;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $aws-orange;
+    }
+
+    // Hide browser spin arrows
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button { -webkit-appearance: none; }
+    -moz-appearance: textfield;
+  }
+}
+
+// ── Filter tabs ───────────────────────────────────────────────
+.review-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.review-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: $radius-md;
+  border: 1px solid $border;
+  background: $card-bg;
+  color: $text-secondary;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: $transition-fast;
+
+  &:hover {
+    border-color: #4A5568;
+    color: $text-primary;
+  }
+
+  &.active {
+    border-color: $aws-orange;
+    background: rgba($aws-orange, 0.1);
+    color: $aws-orange;
+
+    .review-filter-btn__count {
+      background: $aws-orange;
+      color: #000;
+    }
+  }
+}
+
+.review-filter-btn__count {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: rgba($text-secondary, 0.15);
+  color: $text-secondary;
+  padding: 1px 6px;
+  border-radius: 20px;
+  min-width: 20px;
+  text-align: center;
+  transition: $transition-fast;
+}
+
+// ── Status badge on review cards ──────────────────────────────
+.review-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.review-status-badge {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: $radius-sm;
+  letter-spacing: 0.5px;
+
+  &--correct {
+    background: rgba($correct, 0.15);
+    color: $correct;
+    border: 1px solid rgba($correct, 0.35);
+  }
+
+  &--incorrect {
+    background: rgba($incorrect, 0.15);
+    color: $incorrect;
+    border: 1px solid rgba($incorrect, 0.35);
+  }
+}
+
+// ── Empty state ───────────────────────────────────────────────
+.review-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1.0625rem;
+  color: $text-secondary;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  margin-bottom: 1.5rem;
+}
+
+// ── Bottom action bar ─────────────────────────────────────────
+.review-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem 0 1rem;
+  border-top: 1px solid $border;
+  margin-top: 1rem;
+
+  button {
+    padding: 0.75rem 1.5rem;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: $transition-fast;
+  }
+}
+
+.review-actions__back {
+  background: $aws-dark;
+  color: $text-primary;
+  border: 2px solid $aws-orange;
+
+  &:hover { background: rgba($aws-orange, 0.1); }
+}
+
+.review-actions__retake {
+  background: $aws-orange;
+  color: #000;
+  border: 2px solid $aws-orange;
+
+  &:hover { opacity: 0.85; }
+}
+
+.review-actions__home {
+  background: transparent;
+  color: $text-secondary;
+  border: 1px solid $border;
+
+  &:hover {
+    background: $hover-bg;
+    color: $text-primary;
+  }
+}

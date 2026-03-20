@@ -292,12 +292,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     id: 20, domain: 4, type: "single",
     text: "A news aggregation company uses a generative AI model to write news article summaries. The model occasionally presents opinion as fact and misattributes quotes to wrong sources.\n\nWhich responsible AI principle is most directly violated by this behavior, and which approach BEST mitigates it?",
     options: [
-      "Fairness — mitigated by collecting more diverse training data",
-      "Veracity — mitigated by implementing RAG with trusted news source APIs to ground summaries in verified source content",
-      "Explainability — mitigated by publishing SHAP values for each summary",
-      "Robustness — mitigated by increasing model parameter count"
-    ],
-    correct: [1],
+    "Robustness — mitigated by increasing model parameter count",
+    "Fairness — mitigated by collecting more diverse training data",
+    "Veracity — mitigated by implementing RAG with trusted news source APIs to ground summaries in verified source content",
+    "Explainability — mitigated by publishing SHAP values for each summary"
+  ],
+    correct: [2],
     explanation: "Presenting opinion as fact and misattributing quotes violates veracity — the principle that AI systems should produce truthful, accurate outputs. The most direct mitigation is RAG with verified source APIs — grounding each summary in the specific retrieved article content and requiring the model to attribute claims to the source document. This constrains the model to verified content rather than relying on its parametric memory. Fairness addresses group equity. SHAP values explain predictions, not factual accuracy. Parameter count doesn't improve source accuracy."
   },
 
@@ -320,12 +320,12 @@ const questions = [// ── Q1  Domain 1  match (Select FIVE) ─────�
     id: 22, domain: 5, type: "single",
     text: "A company's CISO requires that all access to Amazon Bedrock APIs from production applications must be authenticated using temporary security credentials — never using long-lived access keys.\n\nWhich AWS mechanism issues temporary security credentials with a configurable expiration time?",
     options: [
-      "AWS IAM user access keys (permanent key pairs)",
-      "AWS Security Token Service (STS) via IAM Roles — issues temporary credentials with a defined expiration",
-      "Amazon Cognito user pool tokens",
-      "AWS Secrets Manager rotated API keys"
-    ],
-    correct: [1],
+    "AWS Secrets Manager rotated API keys",
+    "AWS IAM user access keys (permanent key pairs)",
+    "AWS Security Token Service (STS) via IAM Roles — issues temporary credentials with a defined expiration",
+    "Amazon Cognito user pool tokens"
+  ],
+    correct: [2],
     explanation: "AWS Security Token Service (STS) issues temporary security credentials (access key ID, secret access key, and session token) with a configurable expiration (15 minutes to 12 hours). Applications assume an IAM role to receive these temporary credentials, which automatically expire — eliminating the risk of long-lived key exposure. This is the AWS-recommended approach for production application authentication. IAM user access keys are permanent and violate the CISO's requirement. Cognito is for user authentication in web/mobile apps. Secrets Manager manages static secrets."
   },
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { DOMAIN_SHORT, DOMAIN_COLORS } from '../data/index';
 
-export default function ResultsPanel({ questions, results, onRetake, onHome }) {
-  // Tally scores
+export default function ResultsPanel({ questions, results, onRetake, onReview, onHome }) {
   let correct = 0;
   const domainStats = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 }, 5: { c: 0, t: 0 } };
 
@@ -15,10 +14,11 @@ export default function ResultsPanel({ questions, results, onRetake, onHome }) {
     }
   });
 
-  const total   = questions.length;
-  const pct     = Math.round((correct / total) * 100);
-  const scaled  = Math.round(100 + (pct / 100) * 900);
-  const pass    = scaled >= 700;
+  const total  = questions.length;
+  const pct    = Math.round((correct / total) * 100);
+  const scaled = Math.round(100 + (pct / 100) * 900);
+  const pass   = scaled >= 700;
+  const wrong  = total - correct;
 
   return (
     <div className="results">
@@ -30,6 +30,19 @@ export default function ResultsPanel({ questions, results, onRetake, onHome }) {
 
       <div className={`results__verdict results__verdict--${pass ? 'pass' : 'fail'}`}>
         {pass ? 'PASS' : 'FAIL'}
+      </div>
+
+      {/* Quick wrong/correct summary */}
+      <div className="results__summary">
+        <div className="results__summary-item results__summary-item--correct">
+          <span className="results__summary-num">{correct}</span>
+          <span className="results__summary-lbl">Correct</span>
+        </div>
+        <div className="results__summary-divider" />
+        <div className="results__summary-item results__summary-item--wrong">
+          <span className="results__summary-num">{wrong}</span>
+          <span className="results__summary-lbl">Incorrect</span>
+        </div>
       </div>
 
       <div className="results__breakdown">
@@ -57,6 +70,10 @@ export default function ResultsPanel({ questions, results, onRetake, onHome }) {
       </p>
 
       <div className="results__actions">
+        {/* Primary: Review answers */}
+        <button className="results__review-btn" onClick={onReview}>
+          📋 Review Answers
+        </button>
         <button className="results__retake-btn" onClick={onRetake}>
           ↺ Retake Test
         </button>
